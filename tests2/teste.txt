@@ -1,4 +1,4 @@
 teste.pdf
 falso.docx
 falso.mp3
-tests2/teste.mp4
+tests/teste.mp4

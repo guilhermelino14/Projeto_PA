@@ -1,5 +1,5 @@
-tests/teste.pdf: PDF document, version 1.4
-496-14]
+tests/teste.mp4: ISO Media, MP4 v2 [ISO 14496-14]
+
 x 500
 
 x 500
