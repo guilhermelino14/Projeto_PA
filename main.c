@@ -21,14 +21,16 @@
 #include <fcntl.h>
 #include <dirent.h>
 #define MAX_LINE_CHARS		256
-int G_ANALYZED=0;
-int G_OK=0;
-int G_ERROR=0;
-int G_MISMATCH=0;
+typedef struct {
+	int G_ANALYZED;
+	int G_OK;
+	int G_ERROR;
+	int G_MISMATCH;
+} SUMMARY_PARAMS;
 
 void extension_manager(char *file);
 void directory_manager(char *directory);
-void file_manager(char **file, int file_count);
+void file_manager(char **files, int file_count);
 void batch_manager(char *file);
 
 /**
@@ -37,7 +39,6 @@ void batch_manager(char *file);
 int main(int argc, char *argv[]) {
 	
 	struct gengetopt_args_info args;
-	
 	if(cmdline_parser(argc, argv, &args) ){
 		ERROR(1,"Erro");
 	}
@@ -45,10 +46,9 @@ int main(int argc, char *argv[]) {
 	//set variables to optimise commands
 	char *directory = args.dir_arg;
 	int file_count = args.file_given;
+	// Multiple filenames
 	char **fileName = args.file_orig;
 	char *file_batch = args.batch_orig;
-
-	
 	
 	if(args.nohelp_given){
 		execlp("./prog","prog", "--help", NULL);
@@ -69,20 +69,21 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-void file_manager(char **file, int file_count){
+void file_manager(char **files, int file_count){
 	pid_t pid;
 	FILE *fileopener;
+	SUMMARY_PARAMS params = {0, 0, 0, 0};
 	for(int i = 0; i < file_count; i++){
-		G_ANALYZED++;
-		if((fileopener = fopen(file[i], "r"))== NULL){
-			printf("[ERROR] cannot open file '%s' -- No such file or directory \n", file[i]);
-			G_ERROR++;
+		params.G_ANALYZED++;
+		if((fileopener = fopen(files[i], "r"))== NULL){
+			printf("[ERROR] cannot open file '%s' -- No such file or directory \n", files[i]);
+			params.G_ERROR++;
 			continue;
 		}
 		//check if file close
 		if(fclose(fileopener) != 0){
-			printf("[ERROR] cannot close file '%s' -- No such file or directory \n", file[i]);
-			G_ERROR++;
+			printf("[ERROR] cannot close file '%s' -- No such file or directory \n", files[i]);
+			params.G_ERROR++;
 			continue;
 		}
 		//everythings god, run extension_manager
@@ -93,7 +94,7 @@ void file_manager(char **file, int file_count){
 				break;
 			case 0: //son
 				//check if file open
-				extension_manager(file[i]);
+				extension_manager(files[i]);
 				
 				break;
 			default: // father
@@ -112,7 +113,7 @@ void file_manager(char **file, int file_count){
 		if (fgets(file_line, MAX_LINE_CHARS, fileReader) == NULL){
 			ERROR(7, "fgets() - não foi possível ler uma linha do ficheiro");
 		}
-			char *ext = strrchr(file[i], '.')+1;
+			char *ext = strrchr(files[i], '.')+1;
 			const char *pdf = "PDF";
 			const char *gif = "GIF";
 			const char *png = "PNG";
@@ -131,8 +132,8 @@ void file_manager(char **file, int file_count){
 				// char *pointOne = strrchr(file_line, ':')+2;
 				// char *pointTwo = strrchr(pointOne, ',');
 				// printf("%s \n", pointTwo);
-				G_OK++;
-				printf("[OK] '%s': extension '%s' matches file type '%s'\n", file[i], ext, ext);
+				params.G_OK++;
+				printf("[OK] '%s': extension '%s' matches file type '%s'\n", files[i], ext, ext);
 			}else{
 				
 				char delim[] = ";";
@@ -147,15 +148,15 @@ void file_manager(char **file, int file_count){
 					strstr(extension_compare,"mp4") != NULL ||
 					strstr(extension_compare,"html") != NULL)
 				{
-					G_MISMATCH++;
-					printf("[MISMATCH] '%s': extension is '%s', file type is '%s'\n", file[i],ext,extension_compare);
+					params.G_MISMATCH++;
+					printf("[MISMATCH] '%s': extension is '%s', file type is '%s'\n", files[i],ext,extension_compare);
 				}else{
-					printf("[INFO] '%s': type '%s' is not supported by checkFile \n", file[i], file_line_with_ptr);
+					printf("[INFO] '%s': type '%s' is not supported by checkFile \n", files[i], file_line_with_ptr);
 				}
 			}
 		
 	}
-	printf("[SUMMARY] files analyzed: %d; files OK: %d; Mismatch: %d; errors: %d \n", G_ANALYZED, G_OK, G_MISMATCH, G_ERROR);
+	printf("[SUMMARY] files analyzed: %d; files OK: %d; Mismatch: %d; errors: %d \n", params.G_ANALYZED, params.G_OK, params.G_MISMATCH, params.G_ERROR);
 }
              
 void extension_manager(char *file){
@@ -188,8 +189,11 @@ void extension_manager(char *file){
 void directory_manager(char *directory){
 	struct dirent *	de;
 	DIR *dr = opendir(directory);
-	char file[MAX_LINE_CHARS][MAX_LINE_CHARS];
-	//char **file;
+	char *file[MAX_LINE_CHARS];
+	// file = (0x9, 0)
+	// 0x9 (0, 0, 0, 0)
+	// 0x20 = (O,L,A,\0)
+	// 0x12 = (T,E,S,T,E)
 	int file_count = 0;
 	
 	if (dr == NULL)  // opendir returns NULL if couldn't open directory
@@ -203,22 +207,16 @@ void directory_manager(char *directory){
 		if(strcmp(de->d_name, ".") != 0 && strcmp(de->d_name, "..") != 0){
 			char concat[MAX_LINE_CHARS];
 			snprintf(concat, sizeof(concat), "%s%s", directory, de->d_name);
+			// CALCULAR TAMANHO DA STRING
+			// CRIAR ARRAY DINAMICAMENTE
+			file[file_count] = (char *) malloc(strlen(concat));	
 			strcpy(file[file_count], concat);
-			//file[file_count] = concat;
-			printf("%s \n", file[file_count]);
 			file_count++;
 		}
 	}
 	closedir(dr);
-	//FILE *file[file_count];
-	printf("\n");
-	for (int i = 0; i < file_count; i++)
-	{
-		printf("%s \n", file[i]);
-	}
 	
-	
-	//file_manager(file, file_count);
+	file_manager(file, file_count);
     
 }
 void batch_manager(char *file){
@@ -233,14 +231,22 @@ void batch_manager(char *file){
     if (fp == NULL)
         exit(EXIT_FAILURE);
 
-
     while ((read = getline(&line, &len, fp)) != -1) {
 		// remove newline \n
 		char *pos;
 		if ((pos=strchr(line, '\n')) != NULL){
 			*pos = '\0';
 		}
-		file_final[file_count] = line;
+		// VERIFY IF STRING AS /  IF NOT ADD DIRECTORY 
+		if(strstr(line,"/") == NULL){
+			char delim[] = "/";
+			char *ptr = strtok(file, delim);
+			char concat[MAX_LINE_CHARS];
+			snprintf(concat, sizeof(concat), "%s%s%s", ptr, "/", line);
+			strcpy(line, concat);
+		}
+		file_final[file_count] = (char *) malloc(strlen(line));	
+		strcpy(file_final[file_count], line);
 		file_count++;
     }
 	file_manager(file_final, file_count);
