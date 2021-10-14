@@ -157,6 +157,7 @@ void file_manager(char **files, int file_count){
 		
 	}
 	printf("[SUMMARY] files analyzed: %d; files OK: %d; Mismatch: %d; errors: %d \n", params.G_ANALYZED, params.G_OK, params.G_MISMATCH, params.G_ERROR);
+	remove("saveFile.txt");
 }
              
 void extension_manager(char *file){
