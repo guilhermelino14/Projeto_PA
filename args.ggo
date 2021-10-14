@@ -1,0 +1,31 @@
+package "checkfile"
+version "1.0"
+#purpose "Simple example (optional)"
+#description "description needed (optional)"
+#versiontext "versiontext needed (optional)"
+
+#----------------------------
+# independent options
+#----------------------------
+# Mandatory option
+#option "folder" f "folder" string typestr="dirname" required
+
+
+option "file" f "Check a specific file" string optional multiple(1-5)
+option "batch" b "Check inside file, line by line" string optional
+option "dir" d "Check one specific directory" string optional
+option "nohelp" h "A list of all avaliable commands" optional
+
+
+text "\nCheckFile -----------------------------\n"
+text "Author: Guilherme Lino ( 2200666 )\n"
+text "Author: Rodrigo Susano ( 2200666 )\n"
+text "List of valid Files: // PDF // GIF // PNG // MP4 // ZIP // HTML //"
+
+# Optional
+#option "num" n "number" int optional
+
+
+#
+# NOTE: support for this file needs to be enabled in 'makefile'
+#
