@@ -1,31 +1,4 @@
-[?2004h[?1049h[22;0;0t[1;44r(B[m[4l[?7h[39;49m[?1h=[?1h=[?25l[39;49m(B[m[H[2J[42;35H(B[0;7m[ Reading... ](B[m[42;32H(B[0;7m[ Read 21188 lines ](B[m[H(B[0;7m  GNU nano 4.8                         teste.pdf                                   [1;82H(B[m
-[43d(B[0;7m^G(B[m Get Help  (B[0;7m^O(B[m Write Out (B[0;7m^W(B[m Where Is  (B[0;7m^K(B[m Cut Text  (B[0;7m^J(B[m Justify   (B[0;7m^C(B[m Cur Pos
-[44d(B[0;7m^X(B[m Exit[14G(B[0;7m^R(B[m Read File (B[0;7m^\(B[m Replace   (B[0;7m^U(B[m Paste Text(B[0;7m^T(B[m To Spell  (B[0;7m^_(B[m Go To Line
-[42d[2d[39;49m(B[m%PDF-1.4
-[3d%����
-[4d4 0 obj
-[5d<<
-[6d/Width 1132
-[7d/BitsPerComponent 8
-[8d/Interpolate true
-[9d/Height 1600
-[10d/Subtype /Image
-[11d/Filter /DCTDecode
-[12d/Length 260291
-[13d/Type /XObject
-[14d/ColorSpace /DeviceRGB
-[15d>>
-[16dstream
-[17d����^@^PJFIF^@^A^A^A^@^@^@^@^@^@��^@C^@^D^B^C^C^C^B^D^C^C^C^D^D^D^D^E   ^F^E^E^E^E(B[0;7m>[18;1H(B[m^F^F
-[19d^V^O^L^O^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V(B[0;7m>[20;1H(B[m^K��^@�^P^@^B^A^C^C^B^D^C^E^E^D^D^@^@^A}^A^B^C^@^D^Q^E^R!1A^F^SQa^G"q^T2���^H#B��^(B[0;7m>[21;1H(B[m^V^W^X^Y^Z%&'()*456789:CDEFGHIJSTUVWXYZcdefghijstuvwxyz���������������������������(B[0;7m>[22;1H(B[m^K��^@�^Q^@^B^A^B^D^D^C^D^G^E^D^D^@^A^Bw^@^A^B^C^Q^D^E!1^F^RAQ^Gaq^S"2�^H^TB����  (B[0;7m>[23;1H(B[m^V$4�%�^W^X^Y^Z&'()*56789:CDEFGHIJSTUVWXYZcdefghijstuvwxyz������������������������(B[0;7m>[24;1H(B[mP)E^C��^B�^A�N^K�N^C�1J^E"^[^P^N8�^B��)�Ka@^T�S����q^T^N��R�E4&^jP[73G�J^W��!�oz(B[0;7m>[25;1H(B[mp^\R�A.B^@)@�^@
-[26dZj$6 ^T��^@ҁN¸�4�S��ڜ^WҘ�^Z^@�^[i�y�^B�^Sq�R�O����0
-[27dP=��`�'!^@�
-[28dpZP�X\�0)@���F(�\�qF)�^T����`^T�}��`��+��K��^A�)��.7h�^B���@=�>Q\J)�^OCAZ,^W^Zh���(B[0;7m>[29;1H(B[mLe^T�^A������E^TP4� ^Zk.^E>��E!�2�^H"�CAE^TPPQE^T^@�2)�%1�^C=�^ZbQE^T^L(��^@)A���^(B[0;7m>[30;1H(B[m^TR�b[^A@�^B�
-[31dv%�^@�^B�
-[32dZ^Ep^B�^GZz��Ni���O~)�1Ҝ^E(��9^H)E^C^T�^B�-�Q�8
-[33dZ(�-���ɧ^E��d'!��^:S�z
-[34dU^T\��
-[35dP=�çJ^@4�r^P
-[36dp^\P^E(�T�r[^P
-[37dP^M8
-[38d
+teste.pdf
+falso.docx
+falso.mp3
+tests2/teste.mp4

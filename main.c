@@ -29,6 +29,7 @@ int G_MISMATCH=0;
 void extension_manager(char *file);
 void directory_manager(char *directory);
 void file_manager(char **file, int file_count);
+void batch_manager(char *file);
 
 /**
  * given (vezes que é metido o argumento) / arg (é o proprio argumento) **/
@@ -45,6 +46,7 @@ int main(int argc, char *argv[]) {
 	char *directory = args.dir_arg;
 	int file_count = args.file_given;
 	char **fileName = args.file_orig;
+	char *file_batch = args.batch_orig;
 
 	
 	
@@ -56,7 +58,7 @@ int main(int argc, char *argv[]) {
 	}else if(args.file_given && !args.batch_given && !args.dir_given){
 		file_manager(fileName, file_count);
 	}else if(!args.file_given && args.batch_given && !args.dir_given){
-	
+		batch_manager(file_batch);
 	}else if(!args.file_given && !args.batch_given && args.dir_given){
 		directory_manager(directory);
 	}else{
@@ -71,7 +73,6 @@ void file_manager(char **file, int file_count){
 	pid_t pid;
 	FILE *fileopener;
 	for(int i = 0; i < file_count; i++){
-		printf("%s \n", file[i]);
 		G_ANALYZED++;
 		if((fileopener = fopen(file[i], "r"))== NULL){
 			printf("[ERROR] cannot open file '%s' -- No such file or directory \n", file[i]);
@@ -187,7 +188,7 @@ void extension_manager(char *file){
 void directory_manager(char *directory){
 	struct dirent *	de;
 	DIR *dr = opendir(directory);
-	char *file[MAX_LINE_CHARS];
+	char file[MAX_LINE_CHARS][MAX_LINE_CHARS];
 	//char **file;
 	int file_count = 0;
 	
@@ -200,17 +201,17 @@ void directory_manager(char *directory){
 		
 		
 		if(strcmp(de->d_name, ".") != 0 && strcmp(de->d_name, "..") != 0){
-			// lets go now
 			char concat[MAX_LINE_CHARS];
 			snprintf(concat, sizeof(concat), "%s%s", directory, de->d_name);
-			//printf("%s \n", concat);
-			file[file_count] = concat;
+			strcpy(file[file_count], concat);
+			//file[file_count] = concat;
 			printf("%s \n", file[file_count]);
 			file_count++;
 		}
 	}
 	closedir(dr);
 	//FILE *file[file_count];
+	printf("\n");
 	for (int i = 0; i < file_count; i++)
 	{
 		printf("%s \n", file[i]);
@@ -219,4 +220,33 @@ void directory_manager(char *directory){
 	
 	//file_manager(file, file_count);
     
+}
+void batch_manager(char *file){
+	char *file_final[MAX_LINE_CHARS];
+	int file_count = 0;
+	FILE * fp;
+    char * line = NULL;
+    size_t len = 0;
+    ssize_t read;
+
+    fp = fopen(file, "r");
+    if (fp == NULL)
+        exit(EXIT_FAILURE);
+
+
+    while ((read = getline(&line, &len, fp)) != -1) {
+		// remove newline \n
+		char *pos;
+		if ((pos=strchr(line, '\n')) != NULL){
+			*pos = '\0';
+		}
+		file_final[file_count] = line;
+		file_count++;
+    }
+	file_manager(file_final, file_count);
+	fclose(fp);
+    if (line){ 
+        free(line);
+	}
+	
 }

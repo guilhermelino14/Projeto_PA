@@ -1,6 +1,6 @@
-tests2/falso.mp4: empty
-ia, MP4 v2 [ISO 14496-14]
- x 500
+tests/teste.pdf: PDF document, version 1.4
+496-14]
+x 500
 
 x 500
 wordprocessingml.document; charset=binary
