@@ -19,7 +19,7 @@ option "nohelp" h "A list of all avaliable commands" optional
 
 text "\nCheckFile -----------------------------\n"
 text "Author: Guilherme Lino ( 2200666 )\n"
-text "Author: Rodrigo Susano ( 2200666 )\n"
+text "Author: Rodrigo Susano ( 2191839 )\n"
 text "List of valid Files: // PDF // GIF // PNG // MP4 // ZIP // HTML //"
 
 # Optional
