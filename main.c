@@ -44,7 +44,12 @@ void batch_manager(char *file);
 void signal_manager(int signal);
 
 /**
- * given (vezes que é metido o argumento) / arg (é o proprio argumento) **/
+ int main(int argc, char *argv[]) 
+ int argc 
+ char *argv[] 
+
+ this function handles what type of option was chosen by the user and executes the respective function
+**/
 
 int main(int argc, char *argv[]) {
 	
@@ -62,7 +67,7 @@ int main(int argc, char *argv[]) {
 
 	// VERIFY THE GENGETOPT COMMAND ARGS
 	if(args.nohelp_given){
-		execlp("./prog","prog", "--help", NULL);
+		execlp("./checkfile","checkfile", "--help", NULL);
 	}else if(!args.file_given && !args.batch_given && !args.dir_given){
 		printf("Error you need to set arguments \n");
 		exit(0);
@@ -80,6 +85,15 @@ int main(int argc, char *argv[]) {
 	cmdline_parser_free(&args);
     return 0;
 }
+
+/**
+ file_manager(char **files, int file_count)
+ char **files    -> A Array of Files
+ int file_count  -> Number of files to analise
+
+ this function takes care of everything regarding the array of files that were passed to the function,
+  namely the file type and its extension and at the end, prints the summary
+**/
 
 void file_manager(char **files, int file_count){
 	pid_t pid;
@@ -162,7 +176,7 @@ void file_manager(char **files, int file_count){
 			const char *html = "HTML";
 
 
-			kill(getpid(), SIGQUIT);
+			//kill(getpid(), SIGQUIT);
 
 
 			//IF YES IS A OK TYPE
@@ -200,12 +214,20 @@ void file_manager(char **files, int file_count){
 		
 	}
 	// SUMMARY OF THE RESULST OF THE EXECUTATION
-	printf("[SUMMARY] files analyzed: %d; files OK: %d; Mismatch: %d; errors: %d \n", params.G_ANALYZED, params.G_OK, params.G_MISMATCH, params.G_ERROR);
+	if(batch_params.MODE == 1){
+		printf("[SUMMARY] files analyzed: %d; files OK: %d; Mismatch: %d; errors: %d \n", params.G_ANALYZED, params.G_OK, params.G_MISMATCH, params.G_ERROR);
+	}
 	
 	// REMOVE FILE (WHERE IS WRITING THE LINE)
 	remove("saveFile.txt");
 }
-             
+
+/**
+ extension_manager(char *file)
+ char *file -> the file to check the extension
+
+ this function handles the extension, compares the file's extension type with the one given by the system
+**/         
 void extension_manager(char *file){
 	//CHECK EXTENSION OF THE FILE
 	char *ext = strrchr(file, '.')+1;
@@ -234,14 +256,20 @@ void extension_manager(char *file){
 	
 	
 }
+
+/**
+ void directory_manager(char *directory)
+ char *directory  -> the directory to check the files
+
+ this function receives the directory and tries to read all the files that exist in it,
+  takes care of all the problems and in the end returns the files to the file_manager()
+**/  
+
 void directory_manager(char *directory){
-	struct dirent *	de;
+	struct dirent *	dirFile;
 	DIR *dir = opendir(directory);
 	char *file[MAX_LINE_CHARS];
-	// file = (0x9, 0)
-	// 0x9 (0, 0, 0, 0)
-	// 0x20 = (O,L,A,\0)
-	// 0x12 = (T,E,S,T,E)
+	
 	int file_count = 0;
 	
 	if (dir == NULL)  // opendir returns NULL if couldn't open directory
@@ -249,10 +277,10 @@ void directory_manager(char *directory){
         printf("[ERROR] cannot open dir '%s' --  No such file or directory \n", directory);
         return;
     }
-	while ((de = readdir(dir)) != NULL){
+	while ((dirFile = readdir(dir)) != NULL){
 		
 		
-		if(strcmp(de->d_name, ".") != 0 && strcmp(de->d_name, "..") != 0){
+		if(strcmp(dirFile->d_name, ".") != 0 && strcmp(dirFile->d_name, "..") != 0){
 			char concat[MAX_LINE_CHARS];
 			// IF DIRECTORY DONT HAVE / ADD
 			if(strstr(directory,"/") == NULL)
@@ -260,7 +288,7 @@ void directory_manager(char *directory){
 				snprintf(concat, sizeof(concat), "%s%s", directory, "/");
 				strcpy(directory, concat);
 			}
-			snprintf(concat, sizeof(concat), "%s%s", directory, de->d_name);
+			snprintf(concat, sizeof(concat), "%s%s", directory, dirFile->d_name);
 			// CALCULATE STRING SIZE
 			// CREATE DINAMYC ARRAY
 			file[file_count] = (char *) malloc(strlen(concat));	
@@ -273,6 +301,15 @@ void directory_manager(char *directory){
 	file_manager(file, file_count);
     
 }
+
+/**
+ void batch_manager(char *file)
+ char *file  -> the file to check the files inside
+
+ this function receives the file containing a list of files and takes care of reading all the files,
+  takes care of all the problems and at the end returns the files to the file_manager()
+**/  
+
 void batch_manager(char *file){
 	char *file_final[MAX_LINE_CHARS];
 	batch_params.MODE = 1;
@@ -311,6 +348,13 @@ void batch_manager(char *file){
 	}
 	
 }
+
+/**
+ void signal_manager(int signal)
+ int signal  -> the type of signal the function gets
+
+ this function handles all signals that can be received by the program during its execution.
+**/
 void signal_manager(int signal){
 	int aux; // axiliar variable
 	aux = errno;

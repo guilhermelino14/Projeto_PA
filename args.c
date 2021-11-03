@@ -40,7 +40,7 @@ const char *gengetopt_args_info_help[] = {
   "  -b, --batch=STRING  Check inside file, line by line",
   "  -d, --dir=STRING    Check one specific directory",
   "  -h, --nohelp        A list of all avaliable commands",
-  "\nCheckFile -----------------------------\nAuthor: Guilherme Lino ( 2200666 )\nAuthor: Rodrigo Susano ( 2200666 )\nList of valid Files: // PDF // GIF // PNG // MP4 // ZIP // HTML //",
+  "\nCheckFile -----------------------------\nAuthor: Guilherme Lino ( 2200666 )\nAuthor: Rodrigo Susano ( 2191839 )\nList of valid Files: // PDF // GIF // PNG // MP4 // ZIP // HTML //",
     0
 };
 

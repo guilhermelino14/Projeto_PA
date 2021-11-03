@@ -2,3 +2,4 @@ teste.pdf
 falso.docx
 falso.mp3
 tests/teste.mp4
+teste123/teste123.txt
