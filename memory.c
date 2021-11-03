@@ -5,6 +5,8 @@
  * Macros to handle dynamic memory calls (malloc and free). The macros have
  * some error detection and report.
  * @version 2
+ * @author Guilherme Lino ( 2200666 )
+ * @author Rodrigo Susano ( 2191839 )
  */
 #include <stdio.h>
 #include <stdlib.h>

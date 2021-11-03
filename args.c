@@ -7,6 +7,10 @@
   gengetopt output files to be in the public domain:
   we make no copyright claims on it.
 */
+/**
+ * Guilherme Lino ( 2200666 )
+ * Rodrigo Susano ( 2191839 )
+ */
 
 /* If we use autoconf.  */
 #ifdef HAVE_CONFIG_H

@@ -8,6 +8,9 @@
  *
  * @author Miguel Frade, Patricio Domingues, Vitor Carreira
  * @version 2
+ * 
+ * Guilherme Lino ( 2200666 )
+ * Rodrigo Susano ( 2191839 )
  */
 #include <stdio.h>
 #include <stdarg.h>

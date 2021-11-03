@@ -1,8 +1,7 @@
 /**
  * @file main.c
- * @brief Description
- * @date 2018-1-1
- * @author name of author
+ * @author Guilherme Lino ( 2200666 )
+ * @author Rodrigo Susano ( 2191839 )
  */
 
 #include <stdio.h>
@@ -45,8 +44,8 @@ void signal_manager(int signal);
 
 /**
  int main(int argc, char *argv[]) 
- int argc 
- char *argv[] 
+ @int argc 
+ @char *argv[] 
 
  this function handles what type of option was chosen by the user and executes the respective function
 **/
@@ -88,8 +87,8 @@ int main(int argc, char *argv[]) {
 
 /**
  file_manager(char **files, int file_count)
- char **files    -> A Array of Files
- int file_count  -> Number of files to analise
+ @char **files    -> A Array of Files
+ @int file_count  -> Number of files to analise
 
  this function takes care of everything regarding the array of files that were passed to the function,
   namely the file type and its extension and at the end, prints the summary
@@ -214,9 +213,7 @@ void file_manager(char **files, int file_count){
 		
 	}
 	// SUMMARY OF THE RESULST OF THE EXECUTATION
-	if(batch_params.MODE == 1){
-		printf("[SUMMARY] files analyzed: %d; files OK: %d; Mismatch: %d; errors: %d \n", params.G_ANALYZED, params.G_OK, params.G_MISMATCH, params.G_ERROR);
-	}
+	printf("[SUMMARY] files analyzed: %d; files OK: %d; Mismatch: %d; errors: %d \n", params.G_ANALYZED, params.G_OK, params.G_MISMATCH, params.G_ERROR);
 	
 	// REMOVE FILE (WHERE IS WRITING THE LINE)
 	remove("saveFile.txt");
@@ -224,7 +221,7 @@ void file_manager(char **files, int file_count){
 
 /**
  extension_manager(char *file)
- char *file -> the file to check the extension
+ @char *file -> the file to check the extension
 
  this function handles the extension, compares the file's extension type with the one given by the system
 **/         
@@ -259,7 +256,7 @@ void extension_manager(char *file){
 
 /**
  void directory_manager(char *directory)
- char *directory  -> the directory to check the files
+ @char *directory  -> the directory to check the files
 
  this function receives the directory and tries to read all the files that exist in it,
   takes care of all the problems and in the end returns the files to the file_manager()
@@ -304,7 +301,7 @@ void directory_manager(char *directory){
 
 /**
  void batch_manager(char *file)
- char *file  -> the file to check the files inside
+ @char *file  -> the file to check the files inside
 
  this function receives the file containing a list of files and takes care of reading all the files,
   takes care of all the problems and at the end returns the files to the file_manager()
@@ -351,7 +348,7 @@ void batch_manager(char *file){
 
 /**
  void signal_manager(int signal)
- int signal  -> the type of signal the function gets
+ @int signal  -> the type of signal the function gets
 
  this function handles all signals that can be received by the program during its execution.
 **/
